@@ -10,13 +10,13 @@ const io=socket(server);
 
 const chess=new Chess();
 let players={};
-let currentPlayer="W";
+let currentPlayer="w";
 
 app.set("view engine","ejs");
 app.use(express.static(path.join(__dirname,'public')));
  
 app.get("/",(req,res)=>{
-    res.render("index",{title:"Chess"});
+    res.render("index",{title:"Chess game"});
 });
 
 io.on("connection",function(uniquesocket){
@@ -43,7 +43,7 @@ io.on("connection",function(uniquesocket){
     uniquesocket.on("move",(move)=>{
         try{
             if(chess.turn()==='w' && uniquesocket.id!==players.white) return;
-            if(chess.turn()==='b' && uniquesocket.id!==players.white) return;
+            if(chess.turn()==='b' && uniquesocket.id!==players.black) return;
             
             const result=chess.move(move);
             if(result){
